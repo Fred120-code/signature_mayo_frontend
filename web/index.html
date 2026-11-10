@@ -4,11 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>MAYO1 Lab</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@500;600&display=swap"
-      rel="stylesheet"
-    />
     <style>
       :root {
         --dark: #141413;
@@ -20,9 +15,10 @@
         --blue: #6a9bcc;
         --green: #788c5d;
         --red: #b5483a;
-        --h: "Poppins", Arial, sans-serif;
-        --b: "Lora", Georgia, serif;
-        --mono: ui-monospace, Menlo, Consolas, monospace;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        --f: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        --h: var(--f);
+        --b: var(--f);
       }
       * {
         box-sizing: border-box;
@@ -388,6 +384,132 @@
           transition: none !important;
         }
       }
+
+      /* Design moderne et aéré */
+      [hidden] {
+        display: none !important;
+      }
+      .wrap {
+        max-width: 1320px;
+        padding: 3.5rem 2rem 4rem;
+      }
+      h1 {
+        font-size: 2.75rem;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.75rem;
+      }
+      header p {
+        font-size: 1.1rem;
+        max-width: 60ch;
+      }
+      .params {
+        margin-top: 1.5rem;
+        gap: 0.6rem;
+      }
+      .chip {
+        padding: 0.3rem 0.9rem;
+        background: #fff;
+        border: 1px solid var(--soft);
+      }
+      .panel {
+        border-radius: 20px;
+        padding: 2rem;
+        box-shadow:
+          0 1px 2px rgba(20, 20, 19, 0.04),
+          0 12px 32px rgba(20, 20, 19, 0.05);
+      }
+      h2 {
+        font-size: 1.2rem;
+        margin-bottom: 1.25rem;
+      }
+      .top {
+        display: grid;
+        grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+        gap: 2rem;
+        margin-top: 3rem;
+        align-items: stretch;
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1fr) 380px;
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+      textarea {
+        border-radius: 12px;
+        padding: 0.9rem 1rem;
+        border-color: var(--soft);
+      }
+      button {
+        padding: 0.75rem 1.25rem;
+        border-radius: 12px;
+        font-size: 0.92rem;
+        transition:
+          transform 0.15s,
+          box-shadow 0.15s;
+      }
+      button:hover:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 16px rgba(20, 20, 19, 0.12);
+      }
+      .btns {
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+      fieldset {
+        margin-top: 1.5rem;
+      }
+      .sizes {
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 1.25rem;
+      }
+      .sizes div {
+        border-radius: 16px;
+        padding: 1.4rem 1.5rem;
+      }
+      .sizes dt {
+        font-size: 0.9rem;
+        margin-bottom: 0.4rem;
+      }
+      .sizes dd {
+        font: 600 2.1rem/1.1 var(--h);
+        letter-spacing: -0.02em;
+      }
+      #sizesEmpty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 180px;
+        margin: 0;
+        border: 2px dashed var(--soft);
+        border-radius: 16px;
+        font-size: 1.05rem;
+        text-align: center;
+        padding: 1rem;
+      }
+      #sigBox {
+        margin-top: 1.5rem;
+      }
+      .player {
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+      }
+      .row {
+        padding: 0.5rem 0 0.5rem 3rem;
+      }
+      .dot {
+        top: 1.4rem;
+      }
+      .node {
+        padding: 0.7rem 1rem;
+        border-radius: 12px;
+        font-size: 0.98rem;
+      }
+      @media (max-width: 1020px) {
+        .top,
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
   <body>
@@ -405,56 +527,53 @@
         </div>
       </header>
 
-      <div class="grid">
-        <div class="side">
-          <section class="panel">
-            <h2>Message et actions</h2>
+      <div class="top">
+        <section class="panel">
+          <h2>Message et actions</h2>
+          <label for="message" class="chip" style="background: none; padding: 0"
+            >Message à signer</label
+          >
+          <textarea id="message" rows="3">Bonjour MAYO1</textarea>
+          <div class="btns">
+            <button class="primary" id="bKeygen">Générer les clés</button>
+            <button class="primary" id="bSign" disabled>
+              Signer le message
+            </button>
+            <button class="primary" id="bVerify" disabled>
+              Vérifier la signature
+            </button>
+          </div>
+          <fieldset>
+            <legend>Que vérifier ?</legend>
             <label
-              for="message"
-              class="chip"
-              style="background: none; padding: 0"
-              >Message à signer</label
+              ><input type="radio" name="tamper" value="none" checked /> La
+              signature telle quelle</label
             >
-            <textarea id="message" rows="3">Bonjour MAYO1</textarea>
-            <div class="btns">
-              <button class="primary" id="bKeygen">Générer les clés</button>
-              <button class="primary" id="bSign" disabled>
-                Signer le message
-              </button>
-              <button class="primary" id="bVerify" disabled>
-                Vérifier la signature
-              </button>
-            </div>
-            <fieldset>
-              <legend>Que vérifier ?</legend>
-              <label
-                ><input type="radio" name="tamper" value="none" checked /> La
-                signature telle quelle</label
-              >
-              <label
-                ><input type="radio" name="tamper" value="message" /> Avec le
-                message modifié</label
-              >
-              <label
-                ><input type="radio" name="tamper" value="signature" /> Avec un
-                bit de la signature inversé</label
-              >
-            </fieldset>
-            <div id="msg" role="status" aria-live="polite"></div>
-          </section>
-          <section class="panel">
-            <h2>Tailles et durées</h2>
-            <p class="empty" id="sizesEmpty">
-              Génère les clés pour voir les tailles.
-            </p>
-            <dl class="sizes" id="sizes" hidden></dl>
-            <details id="sigBox" hidden>
-              <summary>Signature (hexadécimal)</summary>
-              <p class="mono" id="sigHex"></p>
-            </details>
-          </section>
-        </div>
+            <label
+              ><input type="radio" name="tamper" value="message" /> Avec le
+              message modifié</label
+            >
+            <label
+              ><input type="radio" name="tamper" value="signature" /> Avec un
+              bit de la signature inversé</label
+            >
+          </fieldset>
+          <div id="msg" role="status" aria-live="polite"></div>
+        </section>
+        <section class="panel">
+          <h2>Tailles et durées</h2>
+          <p class="empty" id="sizesEmpty">
+            Génère les clés pour voir les tailles.
+          </p>
+          <dl class="sizes" id="sizes" hidden></dl>
+          <details id="sigBox" hidden>
+            <summary>Signature (hexadécimal)</summary>
+            <p class="mono" id="sigHex"></p>
+          </details>
+        </section>
+      </div>
 
+      <div class="grid">
         <section class="panel">
           <div class="tabs" role="tablist">
             <button role="tab" id="tSign" aria-selected="true">
