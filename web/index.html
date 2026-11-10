@@ -1,0 +1,824 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>MAYO1 Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=Poppins:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --dark: #141413;
+        --light: #faf9f5;
+        --mid: #b0aea5;
+        --soft: #e8e6dc;
+        --ink2: #5e5d59;
+        --orange: #d97757;
+        --blue: #6a9bcc;
+        --green: #788c5d;
+        --red: #b5483a;
+        --h: "Poppins", Arial, sans-serif;
+        --b: "Lora", Georgia, serif;
+        --mono: ui-monospace, Menlo, Consolas, monospace;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--light);
+        color: var(--dark);
+        font: 16px/1.65 var(--b);
+      }
+      h1,
+      h2,
+      h3,
+      button,
+      .chip,
+      label,
+      summary {
+        font-family: var(--h);
+      }
+      h1 {
+        font-size: 2rem;
+        line-height: 1.2;
+        margin: 0 0 0.5rem;
+        font-weight: 600;
+      }
+      h2 {
+        font-size: 1.05rem;
+        margin: 0 0 0.75rem;
+        font-weight: 600;
+      }
+      p {
+        margin: 0 0 0.75rem;
+      }
+      .wrap {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
+      }
+      header p {
+        max-width: 62ch;
+        color: var(--ink2);
+      }
+      .params {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+      .chip {
+        display: inline-block;
+        padding: 0.15rem 0.65rem;
+        border-radius: 999px;
+        background: var(--soft);
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 300px minmax(0, 1fr) 340px;
+        gap: 1.5rem;
+        margin-top: 2rem;
+        align-items: start;
+      }
+      .panel {
+        border: 1px solid var(--soft);
+        border-radius: 10px;
+        padding: 1.1rem;
+        background: #fff;
+      }
+      .side {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      textarea {
+        width: 100%;
+        font: inherit;
+        padding: 0.6rem;
+        border: 1px solid var(--mid);
+        border-radius: 6px;
+        background: var(--light);
+        resize: vertical;
+      }
+      button {
+        font-size: 0.88rem;
+        font-weight: 500;
+        border: 1px solid var(--dark);
+        background: var(--light);
+        color: var(--dark);
+        padding: 0.5rem 0.9rem;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+      button.primary {
+        background: var(--dark);
+        color: var(--light);
+      }
+      button:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      button:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible,
+      input:focus-visible {
+        outline: 3px solid var(--blue);
+        outline-offset: 2px;
+      }
+      .btns {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+      }
+      fieldset {
+        border: 0;
+        padding: 0;
+        margin: 0.75rem 0 0;
+      }
+      legend {
+        font: 500 0.85rem var(--h);
+        margin-bottom: 0.35rem;
+        padding: 0;
+      }
+      fieldset label {
+        display: block;
+        font: 400 0.9rem var(--b);
+        padding: 0.1rem 0;
+      }
+      .sizes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+        margin: 0;
+        padding: 0;
+      }
+      .sizes div {
+        background: var(--light);
+        border-radius: 6px;
+        padding: 0.5rem 0.6rem;
+      }
+      .sizes dt {
+        font-size: 0.78rem;
+        color: var(--ink2);
+      }
+      .sizes dd {
+        margin: 0;
+        font: 600 1.05rem var(--h);
+      }
+      .mono {
+        font-family: var(--mono);
+        font-size: 0.78rem;
+        word-break: break-all;
+      }
+      details {
+        margin-top: 0.75rem;
+      }
+      summary {
+        cursor: pointer;
+        font-size: 0.85rem;
+      }
+      .tabs {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+      .tabs button[aria-selected="true"] {
+        background: var(--dark);
+        color: var(--light);
+      }
+      .player {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+      .player input[type="range"] {
+        flex: 1;
+        min-width: 120px;
+        accent-color: var(--orange);
+      }
+      select {
+        font: inherit;
+        font-size: 0.85rem;
+        padding: 0.35rem;
+        border: 1px solid var(--mid);
+        border-radius: 6px;
+        background: var(--light);
+      }
+      .banner {
+        border-radius: 8px;
+        padding: 0.7rem 1rem;
+        margin-bottom: 1rem;
+        font: 500 0.95rem var(--h);
+        color: #fff;
+      }
+      .banner.ok {
+        background: var(--green);
+      }
+      .banner.ko {
+        background: var(--red);
+      }
+      ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      .row {
+        position: relative;
+        padding: 0.3rem 0 0.3rem 2.6rem;
+      }
+      .row::before {
+        content: "";
+        position: absolute;
+        left: 0.85rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--soft);
+        transition: background 0.4s;
+      }
+      .row.done::before {
+        background: var(--green);
+      }
+      .dot {
+        position: absolute;
+        left: 0.3rem;
+        top: 0.75rem;
+        width: 1.1rem;
+        height: 1.1rem;
+        border-radius: 50%;
+        border: 2px solid var(--mid);
+        background: var(--light);
+        transition: all 0.35s;
+      }
+      .done .dot {
+        background: var(--green);
+        border-color: var(--green);
+      }
+      .active .dot {
+        background: var(--orange);
+        border-color: var(--orange);
+        transform: scale(1.3);
+        box-shadow: 0 0 0 6px rgba(217, 119, 87, 0.22);
+      }
+      .dot.bad {
+        background: var(--red) !important;
+        border-color: var(--red) !important;
+      }
+      .node {
+        width: 100%;
+        text-align: left;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        padding: 0.45rem 0.7rem;
+        background: transparent;
+        font: 500 0.92rem var(--h);
+        opacity: 0.45;
+        transition: all 0.35s;
+      }
+      .done .node {
+        opacity: 0.9;
+      }
+      .active .node {
+        opacity: 1;
+        background: #fff;
+        border-color: var(--orange);
+        box-shadow: 0 1px 0 var(--orange);
+      }
+      .grp {
+        padding-top: 0.9rem;
+        font: 600 0.82rem var(--h);
+        color: var(--ink2);
+      }
+      .grp.fail {
+        color: var(--orange);
+      }
+      .detail {
+        position: sticky;
+        top: 1rem;
+        min-height: 260px;
+      }
+      .status {
+        display: inline-block;
+        font: 500 0.78rem var(--h);
+        padding: 0.1rem 0.6rem;
+        border-radius: 999px;
+        color: #fff;
+        background: var(--blue);
+      }
+      .status.good {
+        background: var(--green);
+      }
+      .status.warn {
+        background: var(--orange);
+      }
+      .status.bad {
+        background: var(--red);
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+      }
+      td {
+        padding: 0.25rem 0;
+        border-top: 1px solid var(--soft);
+        vertical-align: top;
+      }
+      td:first-child {
+        font-family: var(--mono);
+        font-size: 0.76rem;
+        color: var(--ink2);
+        padding-right: 0.6rem;
+      }
+      .dims {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        align-items: flex-end;
+        margin-top: 0.9rem;
+      }
+      .dim {
+        font-size: 0.75rem;
+        color: var(--ink2);
+        text-align: center;
+      }
+      .dim i {
+        display: block;
+        background: rgba(106, 155, 204, 0.25);
+        border: 2px solid var(--blue);
+        margin: 0 auto 0.2rem;
+        border-radius: 2px;
+        transition: all 0.5s;
+      }
+      .empty {
+        color: var(--ink2);
+      }
+      #msg {
+        min-height: 1.4rem;
+        font: 500 0.85rem var(--h);
+        color: var(--red);
+        margin-top: 0.5rem;
+      }
+      .note {
+        font-size: 0.82rem;
+        color: var(--ink2);
+        margin-top: 1.5rem;
+        max-width: 80ch;
+      }
+      @media (max-width: 1020px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        .detail {
+          position: static;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <h1>MAYO1 Lab</h1>
+        <p>
+          Génère des clés, signe un message et vérifie la signature. Chaque
+          étape vient du vrai moteur Python : rien n'est simulé dans cette page.
+        </p>
+        <div class="params" id="params">
+          <span class="chip">n = 66</span><span class="chip">m = 64</span
+          ><span class="chip">o = 8</span><span class="chip">k = 9</span
+          ><span class="chip">q = 16</span>
+        </div>
+      </header>
+
+      <div class="grid">
+        <div class="side">
+          <section class="panel">
+            <h2>Message et actions</h2>
+            <label
+              for="message"
+              class="chip"
+              style="background: none; padding: 0"
+              >Message à signer</label
+            >
+            <textarea id="message" rows="3">Bonjour MAYO1</textarea>
+            <div class="btns">
+              <button class="primary" id="bKeygen">Générer les clés</button>
+              <button class="primary" id="bSign" disabled>
+                Signer le message
+              </button>
+              <button class="primary" id="bVerify" disabled>
+                Vérifier la signature
+              </button>
+            </div>
+            <fieldset>
+              <legend>Que vérifier ?</legend>
+              <label
+                ><input type="radio" name="tamper" value="none" checked /> La
+                signature telle quelle</label
+              >
+              <label
+                ><input type="radio" name="tamper" value="message" /> Avec le
+                message modifié</label
+              >
+              <label
+                ><input type="radio" name="tamper" value="signature" /> Avec un
+                bit de la signature inversé</label
+              >
+            </fieldset>
+            <div id="msg" role="status" aria-live="polite"></div>
+          </section>
+          <section class="panel">
+            <h2>Tailles et durées</h2>
+            <p class="empty" id="sizesEmpty">
+              Génère les clés pour voir les tailles.
+            </p>
+            <dl class="sizes" id="sizes" hidden></dl>
+            <details id="sigBox" hidden>
+              <summary>Signature (hexadécimal)</summary>
+              <p class="mono" id="sigHex"></p>
+            </details>
+          </section>
+        </div>
+
+        <section class="panel">
+          <div class="tabs" role="tablist">
+            <button role="tab" id="tSign" aria-selected="true">
+              Signature
+            </button>
+            <button role="tab" id="tVerify" aria-selected="false">
+              Vérification
+            </button>
+          </div>
+          <div class="player">
+            <button id="bPrev" aria-label="Étape précédente">Précédent</button>
+            <button id="bPlay" class="primary">Lecture</button>
+            <button id="bNext" aria-label="Étape suivante">Suivant</button>
+            <input
+              type="range"
+              id="scrub"
+              min="-1"
+              max="-1"
+              value="-1"
+              aria-label="Position dans le workflow"
+            />
+            <label for="speed" class="chip" style="background: none"
+              >Vitesse</label
+            >
+            <select id="speed">
+              <option value="0.5">× 0,5</option>
+              <option value="1" selected>× 1</option>
+              <option value="2">× 2</option>
+              <option value="4">× 4</option>
+            </select>
+          </div>
+          <div id="outcome"></div>
+          <ol id="flow">
+            <li class="empty">
+              Aucun workflow pour l'instant. Signe un message ou vérifie une
+              signature pour afficher ses étapes.
+            </li>
+          </ol>
+        </section>
+
+        <section class="panel detail" aria-live="polite">
+          <h2>Détail de l'étape</h2>
+          <div id="detail">
+            <p class="empty">Choisis une étape ou lance la lecture.</p>
+          </div>
+        </section>
+      </div>
+      <p class="note">
+        Projet éducatif non certifié : la conformité aux vecteurs officiels MAYO
+        n'est pas attestée. Les clés restent côté serveur et la trace
+        n'enregistre aucune valeur secrète.
+      </p>
+    </div>
+
+    <script>
+      const $ = (s) => document.querySelector(s);
+      const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const LABELS = {
+        secret_key_prepared: "Clé secrète chargée",
+        message_digest: "Digest du message",
+        salt_generated: "Sel dérivé",
+        target_derived: "Cible t",
+        emulsifier_loaded: "Matrices E",
+        attempt_values_generated: "Blocs vinegar v et aléa r",
+        intermediate_matrices_built: "Matrices M et produits W",
+        linear_system_built: "Système A·x = y",
+        sample_solution: "SampleSolution",
+        signature_encoded: "Signature encodée",
+        signing_failed: "Échec de la signature",
+        message_normalized: "Message normalisé",
+        public_key_parsed: "Clé publique lue",
+        signature_length_checked: "Longueur de la signature",
+        signature_split: "Séparation vecteur et sel",
+        signature_vector_decoded: "Vecteur s décodé",
+        signature_blocks_partitioned: "Blocs s₁ à s₉",
+        message_digest_computed: "Digest du message",
+        quadratic_form_evaluated: "Forme quadratique évaluée",
+        verification_compared: "Comparaison avec t",
+        input_rejected: "Entrée rejetée",
+      };
+      const STATUS = {
+        completed: ["terminée", ""],
+        solved: ["solution trouvée", "good"],
+        accepted: ["signature acceptée", "good"],
+        inconsistent: ["système sans solution", "warn"],
+        rejected: ["signature rejetée", "bad"],
+        failed: ["échec", "bad"],
+      };
+      const S = {
+        tab: "sign",
+        trace: { sign: null, verify: null },
+        idx: -1,
+        playing: false,
+        timer: null,
+      };
+
+      async function api(path, body) {
+        const r = await fetch(path, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body || {}),
+        });
+        const j = await r.json();
+        if (!r.ok) {
+          const d = j.detail;
+          throw new Error(
+            typeof d === "string" ? d : (d && d.error) || "Erreur serveur",
+          );
+        }
+        return j;
+      }
+      function say(t) {
+        $("#msg").textContent = t || "";
+      }
+      function busy(btn, label, fn) {
+        return async () => {
+          const old = btn.textContent;
+          btn.disabled = true;
+          btn.textContent = label;
+          say("");
+          try {
+            await fn();
+          } catch (e) {
+            say(e.message);
+          } finally {
+            btn.textContent = old;
+            btn.disabled = false;
+            sync();
+          }
+        };
+      }
+      function sync() {
+        $("#bSign").disabled = !S.keys;
+        $("#bVerify").disabled = !(S.keys && S.trace.sign);
+      }
+      function setTrace(kind, steps, outcome) {
+        stop();
+        S.trace[kind] = { steps, outcome };
+        showTab(kind);
+        S.idx = -1;
+        render();
+        play();
+      }
+      const fmt = (v) =>
+        v === null
+          ? "—"
+          : typeof v === "boolean"
+            ? v
+              ? "oui"
+              : "non"
+            : Array.isArray(v)
+              ? JSON.stringify(v)
+              : String(v);
+
+      function showTab(kind) {
+        S.tab = kind;
+        stop();
+        $("#tSign").setAttribute("aria-selected", kind === "sign");
+        $("#tVerify").setAttribute("aria-selected", kind === "verify");
+        S.idx = S.trace[kind] ? S.trace[kind].steps.length - 1 : -1;
+        render();
+      }
+      function render() {
+        const t = S.trace[S.tab],
+          flow = $("#flow"),
+          steps = t ? t.steps : [];
+        $("#scrub").max = steps.length - 1;
+        $("#scrub").value = S.idx;
+        $("#bPrev").disabled = S.idx < 0;
+        $("#bNext").disabled = !steps.length || S.idx >= steps.length - 1;
+        $("#bPlay").textContent = S.playing ? "Pause" : "Lecture";
+        $("#bPlay").disabled = !steps.length;
+        const last = steps.length - 1,
+          atEnd = t && S.idx === last,
+          lastStep = steps[last];
+        $("#outcome").innerHTML =
+          atEnd && t.outcome
+            ? `<div class="banner ${t.outcome.ok ? "ok" : "ko"}">${t.outcome.text}</div>`
+            : "";
+        if (!steps.length) {
+          flow.innerHTML =
+            '<li class="empty">Aucun workflow pour l\'instant. Signe un message ou vérifie une signature pour afficher ses étapes.</li>';
+          return;
+        }
+        let html = "",
+          prevAttempt = null;
+        steps.forEach((s, i) => {
+          if (s.attempt !== null && s.attempt !== prevAttempt) {
+            const failed = steps.some(
+              (x) => x.attempt === s.attempt && x.status === "inconsistent",
+            );
+            html += `<li class="row grp ${failed ? "fail" : ""}">Tentative ${s.attempt} (ctr = ${s.attempt - 1})${failed ? " : échec, on recommence" : ""}</li>`;
+          }
+          prevAttempt = s.attempt;
+          const cls = i < S.idx ? "done" : i === S.idx ? "active" : "";
+          const bad =
+            ["rejected", "failed", "inconsistent"].includes(s.status) &&
+            i <= S.idx;
+          html += `<li class="row ${cls}"><span class="dot ${bad ? "bad" : ""}"></span><button class="node" data-i="${i}">${s.number}. ${LABELS[s.name] || s.name}</button></li>`;
+        });
+        flow.innerHTML = html;
+        const act = flow.querySelector(".active");
+        if (act)
+          act.scrollIntoView({
+            block: "nearest",
+            behavior: reduce ? "auto" : "smooth",
+          });
+        renderDetail(steps[S.idx]);
+      }
+      function renderDetail(s) {
+        if (!s) {
+          $("#detail").innerHTML =
+            '<p class="empty">Choisis une étape ou lance la lecture.</p>';
+          return;
+        }
+        const [label, kind] = STATUS[s.status] || [s.status, ""];
+        const rows = Object.entries(s.data)
+          .map(
+            ([k, v]) =>
+              `<tr><td>${k}</td><td data-n="${typeof v === "number" ? v : ""}">${fmt(v)}</td></tr>`,
+          )
+          .join("");
+        const shapes = Object.entries(s.dimensions).filter(([, d]) => d.length);
+        const dims = shapes
+          .map(([name, d]) => {
+            const [h, w] = d.length === 1 ? [1, d[0]] : d.slice(-2),
+              scale = 90 / Math.max(h, w);
+            return `<div class="dim"><i style="width:${Math.max(6, w * scale)}px;height:${Math.max(6, h * scale)}px"></i>${name} ${d.join(" × ")}</div>`;
+          })
+          .join("");
+        $("#detail").innerHTML =
+          `<h3 style="margin:0 0 .4rem;font-size:1rem">${LABELS[s.name] || s.name}</h3>
+    <span class="status ${kind}">${label}</span><p style="margin-top:.75rem">${s.description}</p>
+    ${dims ? `<div class="dims">${dims}</div>` : ""}${rows ? `<table>${rows}</table>` : ""}`;
+        if (!reduce)
+          document.querySelectorAll("td[data-n]").forEach((td) => {
+            const n = Number(td.dataset.n);
+            if (td.dataset.n === "" || !Number.isFinite(n) || n < 10) return;
+            const t0 = performance.now();
+            (function tick(now) {
+              const p = Math.min(1, (now - t0) / 450);
+              td.textContent = Math.round(n * p);
+              if (p < 1) requestAnimationFrame(tick);
+            })(t0);
+          });
+      }
+      function go(i) {
+        const n = (S.trace[S.tab]?.steps.length || 0) - 1;
+        S.idx = Math.max(-1, Math.min(n, i));
+        render();
+      }
+      function stop() {
+        S.playing = false;
+        clearTimeout(S.timer);
+      }
+      function play() {
+        const t = S.trace[S.tab];
+        if (!t) return;
+        if (S.idx >= t.steps.length - 1) S.idx = -1;
+        S.playing = true;
+        render();
+        (function next() {
+          if (!S.playing) return;
+          S.timer = setTimeout(
+            () => {
+              if (S.idx >= t.steps.length - 1) {
+                stop();
+                render();
+                return;
+              }
+              go(S.idx + 1);
+              next();
+            },
+            1100 / Number($("#speed").value),
+          );
+        })();
+      }
+
+      $("#bKeygen").onclick = busy($("#bKeygen"), "Génération…", async () => {
+        const r = await api("/api/keygen");
+        S.keys = r;
+        S.trace = { sign: null, verify: null };
+        stop();
+        render();
+        $("#sizesEmpty").hidden = true;
+        $("#sizes").hidden = false;
+        $("#sigBox").hidden = true;
+        const z = r.sizes,
+          tm = r.timings_ms;
+        $("#sizes").innerHTML = [
+          ["Clé publique", z.compact_public_key + " o"],
+          ["Clé secrète", z.compact_secret_key + " o"],
+          [
+            "Clé publique étendue",
+            z.expanded_public_key.toLocaleString("fr-FR") + " o",
+          ],
+          [
+            "Clé secrète étendue",
+            z.expanded_secret_key.toLocaleString("fr-FR") + " o",
+          ],
+          ["Génération", tm.keygen + " ms"],
+          ["Expansion", tm.expansion + " ms"],
+        ]
+          .map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`)
+          .join("");
+      });
+      $("#bSign").onclick = busy($("#bSign"), "Signature…", async () => {
+        const r = await api("/api/sign", { message: $("#message").value });
+        $("#sigBox").hidden = false;
+        $("#sigHex").textContent = r.signature_hex;
+        $("#sizes").insertAdjacentHTML(
+          "beforeend",
+          `<div><dt>Signature</dt><dd>${r.signature_bytes} o</dd></div><div><dt>Durée de Sign</dt><dd>${r.elapsed_ms} ms</dd></div>`,
+        );
+        S.trace.verify = null;
+        setTrace("sign", r.trace, {
+          ok: true,
+          text: `Signature produite : ${r.signature_bytes} octets en ${r.elapsed_ms} ms.`,
+        });
+      });
+      $("#bVerify").onclick = busy($("#bVerify"), "Vérification…", async () => {
+        const tamper = document.querySelector(
+          "input[name=tamper]:checked",
+        ).value;
+        const r = await api("/api/verify", {
+          message: $("#message").value,
+          tamper,
+        });
+        const what = {
+          none: "",
+          message: " (message modifié)",
+          signature: " (un bit inversé)",
+        }[tamper];
+        setTrace("verify", r.trace, {
+          ok: r.valid,
+          text:
+            (r.valid ? "Signature acceptée" : "Signature rejetée") +
+            what +
+            `, vérifiée en ${r.elapsed_ms} ms.`,
+        });
+      });
+      $("#tSign").onclick = () => showTab("sign");
+      $("#tVerify").onclick = () => showTab("verify");
+      $("#bPlay").onclick = () => (S.playing ? (stop(), render()) : play());
+      $("#bPrev").onclick = () => {
+        stop();
+        go(S.idx - 1);
+      };
+      $("#bNext").onclick = () => {
+        stop();
+        go(S.idx + 1);
+      };
+      $("#scrub").oninput = (e) => {
+        stop();
+        go(Number(e.target.value));
+      };
+      $("#flow").onclick = (e) => {
+        const b = e.target.closest(".node");
+        if (b) {
+          stop();
+          go(Number(b.dataset.i));
+        }
+      };
+      render();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,5 @@
+pycryptodome
+pytest
+streamlit
+fastapi
+uvicorn
