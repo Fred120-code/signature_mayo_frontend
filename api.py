@@ -72,11 +72,27 @@ def keygen(
     response: Response, mayo_sid: str | None = Cookie(None)
 ) -> dict:
     start = perf_counter()
-    cpk, csk = generate_keypair()
+    (cpk, csk), trace = generate_keypair(return_trace=True)
     generate_ms = (perf_counter() - start) * 1000
     start = perf_counter()
-    epk, esk = expand_public_key(cpk), expand_secret_key(csk)
-    expand_ms = (perf_counter() - start) * 1000
+    epk = expand_public_key(cpk)
+    pk_ms = (perf_counter() - start) * 1000
+    start = perf_counter()
+    esk = expand_secret_key(csk)
+    sk_ms = (perf_counter() - start) * 1000
+    expand_ms = pk_ms + sk_ms
+    trace.add_step(
+        "public_key_expanded",
+        "ExpandPK : AES-128-CTR(seed_pk) ∥ P3 donne la clé publique étendue "
+        "utilisée par Verify.",
+        data={"expanded_public_key_bytes": len(epk), "elapsed_ms": round(pk_ms)},
+    )
+    trace.add_step(
+        "secret_key_expanded",
+        "ExpandSK : à partir de seed_sk, on calcule O, P1 et les matrices L "
+        "utilisées par Sign. Rien de secret n'est enregistré.",
+        data={"expanded_secret_key_bytes": len(esk), "elapsed_ms": round(sk_ms)},
+    )
     sid = secrets.token_urlsafe(24)
     with LOCK:
         STORE.pop(mayo_sid or "", None)
@@ -94,6 +110,7 @@ def keygen(
             "expanded_secret_key": len(esk),
         },
         "timings_ms": {"keygen": round(generate_ms), "expansion": round(expand_ms)},
+        "trace": trace.to_dict()["steps"],
     }
 
 

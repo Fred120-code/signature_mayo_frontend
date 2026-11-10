@@ -576,7 +576,10 @@
       <div class="grid">
         <section class="panel">
           <div class="tabs" role="tablist">
-            <button role="tab" id="tSign" aria-selected="true">
+            <button role="tab" id="tKeygen" aria-selected="true">
+              Génération des clés
+            </button>
+            <button role="tab" id="tSign" aria-selected="false">
               Signature
             </button>
             <button role="tab" id="tVerify" aria-selected="false">
@@ -608,8 +611,8 @@
           <div id="outcome"></div>
           <ol id="flow">
             <li class="empty">
-              Aucun workflow pour l'instant. Signe un message ou vérifie une
-              signature pour afficher ses étapes.
+              Aucun workflow pour l'instant. Génère les clés, signe un message
+              ou vérifie une signature pour afficher ses étapes.
             </li>
           </ol>
         </section>
@@ -641,6 +644,15 @@
         intermediate_matrices_built: "Matrices M et produits W",
         linear_system_built: "Système A·x = y",
         sample_solution: "SampleSolution",
+        seed_sk_drawn: "Graine secrète seed_sk",
+        key_material_derived: "Dérivation de seed_pk et de O",
+        oil_matrix_decoded: "Matrice O décodée",
+        p1_p2_expanded: "P1 et P2 par AES-128-CTR",
+        p3_computed: "Calcul de P3",
+        p3_encoded: "Encodage de P3",
+        keys_assembled: "Assemblage des clés",
+        public_key_expanded: "Clé publique étendue",
+        secret_key_expanded: "Clé secrète étendue",
         signature_encoded: "Signature encodée",
         signing_failed: "Échec de la signature",
         message_normalized: "Message normalisé",
@@ -663,8 +675,8 @@
         failed: ["échec", "bad"],
       };
       const S = {
-        tab: "sign",
-        trace: { sign: null, verify: null },
+        tab: "keygen",
+        trace: { keygen: null, sign: null, verify: null },
         idx: -1,
         playing: false,
         timer: null,
@@ -731,8 +743,11 @@
       function showTab(kind) {
         S.tab = kind;
         stop();
-        $("#tSign").setAttribute("aria-selected", kind === "sign");
-        $("#tVerify").setAttribute("aria-selected", kind === "verify");
+        [
+          ["keygen", "#tKeygen"],
+          ["sign", "#tSign"],
+          ["verify", "#tVerify"],
+        ].forEach(([k, id]) => $(id).setAttribute("aria-selected", kind === k));
         S.idx = S.trace[kind] ? S.trace[kind].steps.length - 1 : -1;
         render();
       }
@@ -755,7 +770,7 @@
             : "";
         if (!steps.length) {
           flow.innerHTML =
-            '<li class="empty">Aucun workflow pour l\'instant. Signe un message ou vérifie une signature pour afficher ses étapes.</li>';
+            '<li class="empty">Aucun workflow pour l\'instant. Génère les clés, signe un message ou vérifie une signature pour afficher ses étapes.</li>';
           return;
         }
         let html = "",
@@ -855,9 +870,8 @@
       $("#bKeygen").onclick = busy($("#bKeygen"), "Génération…", async () => {
         const r = await api("/api/keygen");
         S.keys = r;
-        S.trace = { sign: null, verify: null };
+        S.trace = { keygen: null, sign: null, verify: null };
         stop();
-        render();
         $("#sizesEmpty").hidden = true;
         $("#sizes").hidden = false;
         $("#sigBox").hidden = true;
@@ -879,6 +893,10 @@
         ]
           .map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`)
           .join("");
+        setTrace("keygen", r.trace, {
+          ok: true,
+          text: `Clés générées : clé publique ${z.compact_public_key} o, clé secrète ${z.compact_secret_key} o, en ${tm.keygen + tm.expansion} ms.`,
+        });
       });
       $("#bSign").onclick = busy($("#bSign"), "Signature…", async () => {
         const r = await api("/api/sign", { message: $("#message").value });
@@ -915,6 +933,7 @@
             `, vérifiée en ${r.elapsed_ms} ms.`,
         });
       });
+      $("#tKeygen").onclick = () => showTab("keygen");
       $("#tSign").onclick = () => showTab("sign");
       $("#tVerify").onclick = () => showTab("verify");
       $("#bPlay").onclick = () => (S.playing ? (stop(), render()) : play());

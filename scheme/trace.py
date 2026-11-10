@@ -32,13 +32,15 @@ class TraceStep:
     dimensions: Dimensions = field(default_factory=dict)
     status: str = "completed"
     attempt: int | None = None
-    operation: Literal["sign", "verify"] = "sign"
+    operation: Literal["sign", "verify", "keygen"] = "sign"
 
     @property
-    def scope(self) -> Literal["signature", "attempt", "verification"]:
+    def scope(self) -> Literal["signature", "attempt", "verification", "keygen"]:
         """Return whether this step applies to Sign, an attempt, or Verify."""
         if self.operation == "verify":
             return "verification"
+        if self.operation == "keygen":
+            return "keygen"
         return "attempt" if self.attempt is not None else "signature"
 
 
@@ -129,6 +131,39 @@ class VerifyTrace:
 
     def to_dict(self) -> dict[str, list[dict[str, object]]]:
         """Return the ordered verification trace as JSON-compatible values."""
+        return _serialize_steps(self.steps)
+
+
+@dataclass
+class KeygenTrace:
+    """Ordered, UI-independent trace of a single MAYO key generation."""
+
+    steps: list[TraceStep] = field(default_factory=list)
+
+    def add_step(
+        self,
+        name: str,
+        description: str,
+        *,
+        data: TraceData | None = None,
+        dimensions: Dimensions | None = None,
+        status: str = "completed",
+    ) -> TraceStep:
+        """Append a key-generation event and assign its one-based sequence."""
+        step = TraceStep(
+            number=len(self.steps) + 1,
+            name=name,
+            description=description,
+            data={} if data is None else data,
+            dimensions={} if dimensions is None else dimensions,
+            status=status,
+            operation="keygen",
+        )
+        self.steps.append(step)
+        return step
+
+    def to_dict(self) -> dict[str, list[dict[str, object]]]:
+        """Return the ordered key-generation trace as JSON-compatible values."""
         return _serialize_steps(self.steps)
 
 
