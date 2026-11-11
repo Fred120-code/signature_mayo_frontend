@@ -116,6 +116,26 @@
         background: var(--dark);
         color: var(--light);
       }
+      button.is-busy {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.55rem;
+      }
+      .loader {
+        width: 1em;
+        height: 1em;
+        flex: 0 0 auto;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-radius: 50%;
+        animation: spin 0.7s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
       button:disabled {
         opacity: 0.4;
         cursor: not-allowed;
@@ -382,6 +402,9 @@
       @media (prefers-reduced-motion: reduce) {
         * {
           transition: none !important;
+        }
+        .loader {
+          animation: none;
         }
       }
 
@@ -704,7 +727,13 @@
         return async () => {
           const old = btn.textContent;
           btn.disabled = true;
+          btn.classList.add("is-busy");
+          btn.setAttribute("aria-busy", "true");
           btn.textContent = label;
+          const loader = document.createElement("span");
+          loader.className = "loader";
+          loader.setAttribute("aria-hidden", "true");
+          btn.append(loader);
           say("");
           try {
             await fn();
@@ -712,6 +741,8 @@
             say(e.message);
           } finally {
             btn.textContent = old;
+            btn.classList.remove("is-busy");
+            btn.removeAttribute("aria-busy");
             btn.disabled = false;
             sync();
           }
