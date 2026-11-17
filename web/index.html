@@ -533,20 +533,898 @@
           grid-template-columns: 1fr;
         }
       }
+
+      :root {
+        --dark: #17211d;
+        --light: #f3f2eb;
+        --mid: #a9b0a7;
+        --soft: #e1e5dc;
+        --ink2: #68746d;
+        --orange: #f28a63;
+        --blue: #8db4ff;
+        --green: #88a96b;
+        --red: #d65b50;
+        --lime: #d8f278;
+        --ease-out: cubic-bezier(0.2, 0.75, 0.25, 1);
+      }
+      body {
+        background:
+          radial-gradient(ellipse at 12% 2%, rgba(216, 242, 120, 0.14), transparent 28rem),
+          var(--light);
+        color: var(--dark);
+      }
+      .wrap {
+        max-width: 1440px;
+        padding: 2rem clamp(1rem, 3vw, 3rem) 4rem;
+      }
+      header {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.85fr);
+        align-items: center;
+        gap: 2rem;
+        min-height: 330px;
+        margin-top: 1rem;
+        padding: clamp(2rem, 5vw, 4.5rem);
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 30px;
+        background:
+          radial-gradient(ellipse at 82% 45%, rgba(141, 180, 255, 0.12), transparent 28rem),
+          linear-gradient(125deg, #17211d, #202c27 65%, #17211d);
+        box-shadow: 0 24px 70px rgba(23, 33, 29, 0.15);
+        color: #f6f7ee;
+        isolation: isolate;
+      }
+      header::after {
+        position: absolute;
+        z-index: -1;
+        inset: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 40px 40px;
+        content: "";
+        mask-image: linear-gradient(90deg, transparent, #000);
+      }
+      .hero-copy {
+        position: relative;
+        z-index: 1;
+      }
+      .eyebrow,
+      .matrix-caption,
+      .matrix-heading,
+      .step-index {
+        font: 600 0.7rem/1.4 var(--mono);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1.1rem;
+        color: var(--lime);
+      }
+      .eyebrow::before {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: var(--lime);
+        box-shadow: 0 0 18px rgba(216, 242, 120, 0.8);
+        content: "";
+      }
+      header h1 {
+        margin: 0 0 1rem;
+        font-size: clamp(3.2rem, 7vw, 6.4rem);
+        font-weight: 650;
+        letter-spacing: -0.085em;
+        line-height: 0.92;
+      }
+      header h1 span {
+        color: var(--lime);
+      }
+      header p {
+        max-width: 48ch;
+        margin-bottom: 1.5rem;
+        color: #c4cec4;
+        font-size: clamp(1rem, 1.5vw, 1.15rem);
+        line-height: 1.65;
+      }
+      .params {
+        gap: 0.5rem;
+        margin-top: 0;
+      }
+      .params .chip {
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.06);
+        color: #e5ebdf;
+        font: 500 0.76rem var(--mono);
+      }
+      .hero-visual {
+        position: relative;
+        display: grid;
+        min-height: 250px;
+        place-items: center;
+        perspective: 900px;
+        transform-style: preserve-3d;
+      }
+      .hero-visual::before {
+        position: absolute;
+        width: 15rem;
+        height: 15rem;
+        border-radius: 50%;
+        background: rgba(216, 242, 120, 0.13);
+        content: "";
+        filter: blur(55px);
+      }
+      .matrix-stack {
+        position: relative;
+        width: min(100%, 340px);
+        height: 230px;
+        transform-style: preserve-3d;
+        animation: stack-float 7s ease-in-out infinite;
+      }
+      .matrix-plane {
+        position: absolute;
+        width: 210px;
+        height: 150px;
+        border: 1px solid rgba(216, 242, 120, 0.75);
+        border-radius: 9px;
+        background:
+          linear-gradient(rgba(216, 242, 120, 0.16) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(216, 242, 120, 0.16) 1px, transparent 1px),
+          rgba(216, 242, 120, 0.035);
+        background-size: 21px 21px;
+        box-shadow: 0 0 28px rgba(216, 242, 120, 0.1), inset 0 0 24px rgba(216, 242, 120, 0.05);
+        transform: rotateX(58deg) rotateZ(-32deg);
+      }
+      .plane-a {
+        top: 31px;
+        left: 18px;
+        opacity: 0.38;
+        transform: translate3d(0, 0, -42px) rotateX(58deg) rotateZ(-32deg);
+      }
+      .plane-b {
+        top: 46px;
+        left: 64px;
+        border-color: rgba(141, 180, 255, 0.82);
+        background:
+          linear-gradient(rgba(141, 180, 255, 0.2) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(141, 180, 255, 0.2) 1px, transparent 1px),
+          rgba(141, 180, 255, 0.04);
+        background-size: 21px 21px;
+        opacity: 0.7;
+        transform: translate3d(0, 0, 0) rotateX(58deg) rotateZ(-32deg);
+      }
+      .plane-c {
+        top: 61px;
+        left: 110px;
+        transform: translate3d(0, 0, 42px) rotateX(58deg) rotateZ(-32deg);
+      }
+      .matrix-caption {
+        position: absolute;
+        right: 0;
+        bottom: 0.4rem;
+        color: #acb9ad;
+        font-size: 0.62rem;
+        letter-spacing: 0.08em;
+        text-align: right;
+      }
+      .panel {
+        border: 1px solid rgba(23, 33, 29, 0.07);
+        border-radius: 22px;
+        background: rgba(255, 255, 252, 0.91);
+        box-shadow: 0 10px 35px rgba(23, 33, 29, 0.055);
+        padding: clamp(1.2rem, 2.4vw, 2rem);
+      }
+      h2 {
+        margin-bottom: 1rem;
+        font-size: 1.15rem;
+        letter-spacing: -0.035em;
+      }
+      .top {
+        grid-template-columns: minmax(300px, 0.92fr) minmax(0, 1.08fr);
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+      }
+      .top > section:first-child {
+        border-color: #26342d;
+        background: #1c2822;
+        color: #f6f7ee;
+      }
+      .top > section:first-child h2 {
+        color: #f6f7ee;
+      }
+      .top > section:first-child .chip {
+        border: 0;
+        color: #bbc8bd;
+        font: 600 0.68rem var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      textarea {
+        min-height: 92px;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        background: rgba(255, 255, 255, 0.06);
+        color: #f6f7ee;
+        transition: border-color 180ms var(--ease-out), background 180ms var(--ease-out);
+      }
+      textarea:focus {
+        border-color: var(--lime);
+        background: rgba(255, 255, 255, 0.09);
+      }
+      .btns {
+        gap: 0.55rem;
+        margin-top: 0.85rem;
+      }
+      button {
+        border-color: rgba(23, 33, 29, 0.16);
+        border-radius: 11px;
+        transition:
+          transform 180ms var(--ease-out),
+          box-shadow 180ms var(--ease-out),
+          background-color 180ms var(--ease-out);
+      }
+      button:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 18px rgba(23, 33, 29, 0.14);
+      }
+      button.primary,
+      .tabs button[aria-selected="true"],
+      .top > section:first-child button.primary {
+        border-color: var(--lime);
+        background: var(--lime);
+        color: #17211d;
+      }
+      .top > section:first-child button.primary:disabled {
+        border-color: rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.09);
+        color: #98a49a;
+        opacity: 1;
+      }
+      .top fieldset {
+        margin-top: 1rem;
+      }
+      .top legend {
+        color: #bbc8bd;
+        font: 600 0.68rem var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .top fieldset label {
+        color: #e0e7dc;
+        font-size: 0.84rem;
+      }
+      .top input[type="radio"] {
+        accent-color: var(--lime);
+      }
+      #msg {
+        min-height: 1.4em;
+        color: #ff9a83;
+      }
+      .sizes {
+        gap: 0.7rem;
+      }
+      .sizes div {
+        border: 1px solid #e8ebe4;
+        border-radius: 14px;
+        background: #f8f9f4;
+        padding: 1rem;
+        animation: card-in 360ms var(--ease-out) both;
+      }
+      .sizes dt {
+        color: var(--ink2);
+        font-size: 0.76rem;
+      }
+      .sizes dd {
+        margin-top: 0.25rem;
+        font-size: clamp(1.1rem, 2.4vw, 1.65rem);
+      }
+      #sizesEmpty {
+        min-height: 210px;
+        border: 1px dashed #cbd2c8;
+        border-radius: 16px;
+        background: #f8f9f4;
+        color: var(--ink2);
+      }
+      #sigBox {
+        padding: 1rem;
+        border: 1px solid var(--soft);
+        border-radius: 14px;
+        background: #f8f9f4;
+      }
+      #sigHex {
+        max-height: 8rem;
+        overflow: auto;
+        color: var(--ink2);
+      }
+      .grid {
+        grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.8fr);
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+      }
+      .tabs {
+        gap: 0.35rem;
+        width: fit-content;
+        max-width: 100%;
+        padding: 0.3rem;
+        border: 1px solid #e7eae3;
+        border-radius: 14px;
+        background: #f5f6f1;
+      }
+      .tabs button {
+        border-color: transparent;
+        background: transparent;
+        color: var(--ink2);
+        font-size: 0.8rem;
+      }
+      .tabs button[aria-selected="true"] {
+        box-shadow: 0 3px 8px rgba(23, 33, 29, 0.12);
+      }
+      .player {
+        gap: 0.5rem;
+        padding: 0.7rem;
+        border: 1px solid #e9ece5;
+        border-radius: 14px;
+        background: #f8f9f5;
+      }
+      .player button {
+        padding: 0.55rem 0.75rem;
+        font-size: 0.78rem;
+      }
+      .player input[type="range"] {
+        accent-color: #819e5e;
+      }
+      .player .chip {
+        color: var(--ink2);
+        font-size: 0.68rem;
+      }
+      .player select {
+        border-color: #dce1d8;
+        border-radius: 9px;
+      }
+      .banner {
+        border-radius: 13px;
+        animation: card-in 300ms var(--ease-out) both;
+      }
+      .row {
+        padding-left: 2.5rem;
+      }
+      .row::before {
+        background: #e5e9e1;
+      }
+      .dot {
+        width: 0.9rem;
+        height: 0.9rem;
+        border-color: #c1c9bf;
+        transition:
+          transform 260ms var(--ease-out),
+          background-color 260ms var(--ease-out),
+          box-shadow 260ms var(--ease-out);
+      }
+      .done .dot {
+        border-color: #a2be7e;
+        background: #a2be7e;
+      }
+      .active .dot {
+        border-color: #e68660;
+        background: #e68660;
+        box-shadow: 0 0 0 5px rgba(242, 138, 99, 0.16);
+      }
+      .node {
+        border-radius: 11px;
+        font-size: 0.88rem;
+        opacity: 0.58;
+        transition:
+          transform 220ms var(--ease-out),
+          opacity 220ms var(--ease-out),
+          background-color 220ms var(--ease-out),
+          border-color 220ms var(--ease-out);
+      }
+      .node:hover:not(:disabled) {
+        transform: translateX(3px);
+        box-shadow: none;
+        opacity: 1;
+      }
+      .active .node {
+        border-color: rgba(242, 138, 99, 0.45);
+        background: #fffaf6;
+        box-shadow: inset 3px 0 #f28a63;
+      }
+      .grp {
+        color: #79857b;
+        font-family: var(--mono);
+        font-size: 0.7rem;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+      .detail {
+        min-height: 320px;
+        border-color: #27342d;
+        background:
+          radial-gradient(ellipse at 100% 0, rgba(216, 242, 120, 0.08), transparent 18rem),
+          #1c2822;
+        color: #eff3e9;
+      }
+      .detail h2 {
+        color: #eff3e9;
+      }
+      #detail h3 {
+        margin: 0.9rem 0 0.55rem !important;
+        color: #f6f7ee;
+        font-size: 1.15rem !important;
+        letter-spacing: -0.035em;
+      }
+      #detail p {
+        color: #c1ccc1;
+        font-size: 0.9rem;
+      }
+      #detail table {
+        color: #e2e8de;
+      }
+      #detail td {
+        border-color: rgba(255, 255, 255, 0.1);
+      }
+      #detail td:first-child {
+        color: #aebcaf;
+      }
+      #detail td[data-n] {
+        font-family: var(--mono);
+      }
+      .detail .empty {
+        color: #b7c3b8;
+      }
+      .status {
+        background: #5879a7;
+      }
+      .status.good {
+        background: #6d8d51;
+      }
+      .status.warn {
+        background: #b97745;
+      }
+      .status.bad {
+        background: #b64d43;
+      }
+      .step-index {
+        display: inline-block;
+        margin-right: 0.5rem;
+        color: var(--lime);
+        font-size: 0.63rem;
+      }
+      .matrix-heading {
+        display: flex;
+        justify-content: space-between;
+        gap: 0.5rem;
+        margin-top: 1.2rem;
+        color: #b6c3b6;
+        font-size: 0.58rem;
+        letter-spacing: 0.06em;
+      }
+      .flow-heading {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-top: 1.2rem;
+        color: #b6c3b6;
+        font: 600 0.62rem var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .flow-heading span:last-child {
+        color: #829287;
+        font-size: 0.55rem;
+        letter-spacing: 0.04em;
+        text-align: right;
+      }
+      .calc-flow {
+        --flow-duration: 1.8s;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 22px minmax(0, 1.15fr) 22px minmax(0, 1fr);
+        align-items: center;
+        gap: 0.35rem;
+        margin-top: 0.65rem;
+        padding: 1rem 0.65rem;
+        overflow: hidden;
+        border: 1px solid rgba(216, 242, 120, 0.16);
+        border-radius: 15px;
+        background:
+          radial-gradient(ellipse at 50% 50%, rgba(216, 242, 120, 0.07), transparent 70%),
+          rgba(8, 15, 11, 0.3);
+        animation: flow-appear 420ms var(--ease-out) both;
+      }
+      .flow-group {
+        display: grid;
+        align-content: center;
+        gap: 0.45rem;
+        min-width: 0;
+      }
+      .flow-group-label {
+        color: #829287;
+        font: 600 0.52rem var(--mono);
+        letter-spacing: 0.1em;
+        text-align: center;
+        text-transform: uppercase;
+      }
+      .flow-node {
+        position: relative;
+        display: grid;
+        min-width: 0;
+        min-height: 50px;
+        align-content: center;
+        justify-items: center;
+        gap: 0.25rem;
+        padding: 0.35rem 0.2rem;
+        overflow: hidden;
+        border: 1px solid rgba(216, 242, 120, 0.28);
+        border-radius: 9px;
+        background: rgba(216, 242, 120, 0.06);
+        color: #e7efd9;
+        font: 600 0.57rem/1.3 var(--mono);
+        text-align: center;
+        overflow-wrap: anywhere;
+        animation: flow-node-in 480ms var(--ease-out) both;
+        animation-delay: var(--flow-delay, 0ms);
+      }
+      .flow-node.output {
+        border-color: rgba(141, 180, 255, 0.38);
+        background: rgba(141, 180, 255, 0.075);
+      }
+      .flow-node.process {
+        min-height: 76px;
+        border-color: rgba(242, 138, 99, 0.52);
+        background:
+          linear-gradient(145deg, rgba(242, 138, 99, 0.12), rgba(216, 242, 120, 0.07)),
+          #26332c;
+        box-shadow: inset 0 0 22px rgba(242, 138, 99, 0.04);
+        color: #fff3e8;
+      }
+      .flow-glyph {
+        position: relative;
+        width: 24px;
+        height: 17px;
+        border: 1px solid rgba(216, 242, 120, 0.75);
+        border-radius: 2px;
+        background:
+          linear-gradient(rgba(216, 242, 120, 0.35) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(216, 242, 120, 0.35) 1px, transparent 1px),
+          rgba(216, 242, 120, 0.05);
+        background-size: 6px 6px;
+        box-shadow: 0 0 12px rgba(216, 242, 120, 0.12);
+        transform: rotateX(35deg) rotateZ(-12deg);
+      }
+      .flow-node.output .flow-glyph {
+        border-color: rgba(141, 180, 255, 0.8);
+        background:
+          linear-gradient(rgba(141, 180, 255, 0.33) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(141, 180, 255, 0.33) 1px, transparent 1px),
+          rgba(141, 180, 255, 0.05);
+        background-size: 6px 6px;
+      }
+      .flow-meta {
+        color: #98aa9b;
+        font-size: 0.49rem;
+        font-weight: 400;
+      }
+      .flow-node.process .flow-meta {
+        color: #d3b7a4;
+      }
+      .flow-operator {
+        position: relative;
+        display: grid;
+        min-height: 48px;
+        place-items: center;
+        color: var(--lime);
+        font: 600 1rem var(--mono);
+      }
+      .flow-operator::before,
+      .flow-operator::after {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        height: 1px;
+        background: rgba(216, 242, 120, 0.3);
+        content: "";
+      }
+      .flow-operator::after {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--lime);
+        box-shadow: 0 0 9px rgba(216, 242, 120, 0.9);
+        animation: flow-particle var(--flow-duration) ease-in-out infinite;
+      }
+      .flow-operator span {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        width: 23px;
+        height: 23px;
+        place-items: center;
+        border: 1px solid rgba(216, 242, 120, 0.4);
+        border-radius: 50%;
+        background: #1c2822;
+      }
+      .flow-formula {
+        margin: 0.55rem 0 0 !important;
+        padding: 0.55rem 0.7rem;
+        border-left: 2px solid rgba(216, 242, 120, 0.55);
+        border-radius: 0 7px 7px 0;
+        background: rgba(216, 242, 120, 0.045);
+        color: #b9c8b7 !important;
+        font: 500 0.63rem/1.55 var(--mono) !important;
+        overflow-wrap: anywhere;
+      }
+      .flow-note {
+        margin: 0.45rem 0 0 !important;
+        color: #829287 !important;
+        font-size: 0.66rem !important;
+      }
+      .data-heading {
+        margin: 1rem 0 0.35rem;
+        color: #829287;
+        font: 600 0.58rem var(--mono);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      @keyframes flow-appear {
+        from {
+          opacity: 0;
+          transform: translateY(7px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes flow-node-in {
+        from {
+          opacity: 0;
+          transform: translateY(5px) scale(0.96);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes flow-particle {
+        0% {
+          opacity: 0;
+          transform: translateX(-8px);
+        }
+        20%,
+        80% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+          transform: translateX(8px);
+        }
+      }
+      .dims {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(94px, 1fr));
+        gap: 0.8rem;
+        align-items: start;
+        margin-top: 0.75rem;
+        padding: 1rem 0.25rem 0.3rem;
+        perspective: 700px;
+      }
+      .dim {
+        display: grid;
+        justify-items: center;
+        gap: 0.24rem;
+        min-width: 0;
+        color: #f1f5ea;
+        font: 600 0.68rem var(--mono);
+        text-align: center;
+        animation: matrix-in 460ms var(--ease-out) both;
+        animation-delay: var(--matrix-delay, 0ms);
+      }
+      .dim i {
+        position: relative;
+        display: block;
+        max-width: 100%;
+        border: 1px solid rgba(216, 242, 120, 0.82);
+        border-radius: 3px;
+        background:
+          linear-gradient(rgba(216, 242, 120, 0.26) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(216, 242, 120, 0.26) 1px, transparent 1px),
+          rgba(216, 242, 120, 0.06);
+        background-size: 9px 9px;
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2), 0 0 16px rgba(216, 242, 120, 0.09);
+        transform: rotateX(48deg) rotateZ(-28deg);
+        transform-style: preserve-3d;
+        transition: transform 380ms var(--ease-out), box-shadow 380ms var(--ease-out);
+      }
+      .dim i.vector-preview {
+        transform: rotateX(18deg) rotateZ(-12deg);
+      }
+      .dim i::after {
+        position: absolute;
+        inset: 0;
+        border: 1px solid rgba(141, 180, 255, 0.38);
+        background:
+          linear-gradient(rgba(141, 180, 255, 0.18) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(141, 180, 255, 0.18) 1px, transparent 1px),
+          rgba(141, 180, 255, 0.04);
+        background-size: 9px 9px;
+        content: "";
+        transform: translateZ(-7px) translate(5px, 5px);
+      }
+      .dim:hover i {
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28), 0 0 24px rgba(216, 242, 120, 0.18);
+        transform: rotateX(40deg) rotateZ(-22deg) translateY(-3px);
+      }
+      .dim:hover i.vector-preview {
+        transform: rotateX(12deg) rotateZ(-8deg) translateY(-3px);
+      }
+      .note {
+        margin: 1.5rem 0.25rem 0;
+        font-size: 0.76rem;
+      }
+      .is-calculating .matrix-stack {
+        animation-duration: 2.4s;
+      }
+      .is-calculating .matrix-plane {
+        box-shadow: 0 0 32px rgba(216, 242, 120, 0.24), inset 0 0 24px rgba(216, 242, 120, 0.1);
+      }
+      .is-calculating .plane-c {
+        animation: scan-plane 1.4s ease-in-out infinite alternate;
+      }
+      @keyframes stack-float {
+        0%,
+        100% {
+          transform: translateY(0) rotateY(-7deg);
+        }
+        50% {
+          transform: translateY(-8px) rotateY(7deg);
+        }
+      }
+      @keyframes scan-plane {
+        from {
+          opacity: 0.55;
+          transform: translate3d(0, 0, 34px) rotateX(58deg) rotateZ(-32deg);
+        }
+        to {
+          opacity: 1;
+          transform: translate3d(0, -7px, 48px) rotateX(58deg) rotateZ(-32deg);
+        }
+      }
+      @keyframes matrix-in {
+        from {
+          opacity: 0;
+          transform: translateY(9px) scale(0.94);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      @keyframes card-in {
+        from {
+          opacity: 0;
+          transform: translateY(8px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @media (max-width: 1020px) {
+        header {
+          grid-template-columns: minmax(0, 1fr) minmax(180px, 0.65fr);
+          gap: 0.75rem;
+        }
+        .grid {
+          grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+        }
+      }
+      @media (max-width: 700px) {
+        .wrap {
+          padding: 1rem 0.8rem 2rem;
+        }
+        header {
+          grid-template-columns: 1fr;
+          gap: 0;
+          min-height: auto;
+          padding: 2rem 1.5rem 1rem;
+          border-radius: 22px;
+        }
+        header h1 {
+          font-size: clamp(3.5rem, 16vw, 5rem);
+        }
+        .hero-visual {
+          min-height: 190px;
+          margin-top: -0.25rem;
+        }
+        .matrix-stack {
+          transform: scale(0.82);
+        }
+        .matrix-caption {
+          right: 0.25rem;
+          bottom: 0;
+        }
+        .top,
+        .grid {
+          grid-template-columns: 1fr;
+          gap: 0.85rem;
+          margin-top: 0.85rem;
+        }
+        .panel {
+          border-radius: 18px;
+          padding: 1.2rem;
+        }
+        .tabs {
+          width: 100%;
+          overflow-x: auto;
+        }
+        .tabs button {
+          flex: 1 0 auto;
+          padding: 0.6rem 0.7rem;
+        }
+        .player {
+          gap: 0.35rem;
+        }
+        .player input[type="range"] {
+          order: 2;
+          flex-basis: 100%;
+        }
+        .calc-flow {
+          grid-template-columns: minmax(0, 1fr) 16px minmax(0, 1.1fr) 16px minmax(0, 1fr);
+          gap: 0.2rem;
+          padding: 0.75rem 0.35rem;
+        }
+        .flow-node {
+          min-height: 46px;
+          font-size: 0.52rem;
+        }
+        .flow-node.process {
+          min-height: 70px;
+        }
+        .flow-meta {
+          font-size: 0.44rem;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+        .flow-operator::after {
+          animation: none !important;
+        }
+      }
     </style>
   </head>
   <body>
     <div class="wrap">
       <header>
-        <h1>MAYO1 Lab</h1>
-        <p>
-          Génère des clés, signe un message et vérifie la signature. Chaque
-          étape vient du vrai moteur Python : rien n'est simulé dans cette page.
-        </p>
-        <div class="params" id="params">
-          <span class="chip">n = 66</span><span class="chip">m = 64</span
-          ><span class="chip">o = 8</span><span class="chip">k = 9</span
-          ><span class="chip">q = 16</span>
+        <div class="hero-copy">
+          <div class="eyebrow">Laboratoire cryptographique · MAYO1</div>
+          <h1>MAYO<span>1</span> Lab</h1>
+          <p>
+            Explore les étapes réelles de génération, de signature et de
+            vérification. La structure des matrices se dévoile au fil du calcul.
+          </p>
+          <div class="params" id="params">
+            <span class="chip">n = 66</span><span class="chip">m = 64</span
+            ><span class="chip">o = 8</span><span class="chip">k = 9</span
+            ><span class="chip">q = 16</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="matrix-stack">
+            <div class="matrix-plane plane-a"></div>
+            <div class="matrix-plane plane-b"></div>
+            <div class="matrix-plane plane-c"></div>
+          </div>
+          <div class="matrix-caption">Algèbre · structure · signature</div>
         </div>
       </header>
 
@@ -702,6 +1580,7 @@
         trace: { keygen: null, sign: null, verify: null },
         idx: -1,
         playing: false,
+        busy: false,
         timer: null,
       };
 
@@ -725,8 +1604,10 @@
       }
       function busy(btn, label, fn) {
         return async () => {
+          if (S.busy) return;
           const old = btn.textContent;
-          btn.disabled = true;
+          S.busy = true;
+          document.body.classList.add("is-calculating");
           btn.classList.add("is-busy");
           btn.setAttribute("aria-busy", "true");
           btn.textContent = label;
@@ -734,6 +1615,7 @@
           loader.className = "loader";
           loader.setAttribute("aria-hidden", "true");
           btn.append(loader);
+          sync();
           say("");
           try {
             await fn();
@@ -743,14 +1625,16 @@
             btn.textContent = old;
             btn.classList.remove("is-busy");
             btn.removeAttribute("aria-busy");
-            btn.disabled = false;
+            S.busy = false;
+            document.body.classList.remove("is-calculating");
             sync();
           }
         };
       }
       function sync() {
-        $("#bSign").disabled = !S.keys;
-        $("#bVerify").disabled = !(S.keys && S.trace.sign);
+        $("#bKeygen").disabled = S.busy;
+        $("#bSign").disabled = S.busy || !S.keys;
+        $("#bVerify").disabled = S.busy || !(S.keys && S.trace.sign);
       }
       function setTrace(kind, steps, outcome) {
         stop();
@@ -770,6 +1654,264 @@
             : Array.isArray(v)
               ? JSON.stringify(v)
               : String(v);
+
+      const CALCULATIONS = {
+        seed_sk_drawn: {
+          inputs: ["Aléa cryptographique"],
+          operation: "Tirage aléatoire",
+          outputs: ["seed_sk"],
+          formula: "CSPRNG → graine secrète",
+        },
+        key_material_derived: {
+          inputs: ["seed_sk"],
+          operation: "SHAKE256",
+          outputs: ["seed_pk", "Octets de O"],
+          formula: "SHAKE256(seed_sk) → seed_pk ∥ encodage(O)",
+          note: "Les octets secrets ne sont ni affichés ni transmis dans la trace.",
+        },
+        oil_matrix_decoded: {
+          inputs: ["Octets de O"],
+          operation: "Décodage",
+          outputs: ["O"],
+          formula: "octets bitsliced → matrice O sur GF(16)",
+          note: "Les cases sont schématiques : les coefficients secrets sont masqués.",
+        },
+        p1_p2_expanded: {
+          inputs: ["seed_pk"],
+          operation: "AES-128-CTR",
+          outputs: ["P1", "P2"],
+          formula: "flux AES → décodage bitsliced → P1, P2",
+        },
+        p3_computed: {
+          inputs: ["P1", "P2", "O"],
+          operation: "Produit matriciel",
+          outputs: ["P3"],
+          formula: "P3ᵢ = Upper(−Oᵀ·P1ᵢ·O − Oᵀ·P2ᵢ)",
+        },
+        p3_encoded: {
+          inputs: ["P3"],
+          operation: "Encodage",
+          outputs: ["Octets P3"],
+          formula: "triangle supérieur → représentation bitsliced",
+        },
+        keys_assembled: {
+          inputs: ["seed_pk", "P3", "seed_sk"],
+          operation: "Concaténation",
+          outputs: ["Clé publique", "Clé secrète"],
+          formula: "clé publique = seed_pk ∥ P3 · clé secrète = seed_sk",
+        },
+        public_key_expanded: {
+          inputs: ["Clé publique compacte"],
+          operation: "Expansion",
+          outputs: ["Clé publique étendue"],
+          formula: "seed_pk + P3 encodé → matrices publiques",
+        },
+        secret_key_expanded: {
+          inputs: ["Clé secrète compacte"],
+          operation: "Expansion",
+          outputs: ["O", "P1", "L"],
+          formula: "seed_sk → O, P1 et matrices L",
+          note: "Le contenu secret reste côté serveur; seules les dimensions sont montrées.",
+        },
+        secret_key_prepared: {
+          inputs: ["Clé secrète étendue"],
+          operation: "Analyse en mémoire",
+          outputs: ["O", "P1", "L"],
+          formula: "clé étendue → structures de travail",
+          note: "Aucune valeur de la clé secrète n'est recopiée dans la trace.",
+        },
+        message_digest: {
+          inputs: ["Message UTF-8"],
+          operation: "SHAKE256",
+          outputs: ["Digest"],
+          formula: "SHAKE256(message) → digest",
+        },
+        message_digest_computed: {
+          inputs: ["Message UTF-8"],
+          operation: "SHAKE256",
+          outputs: ["Digest"],
+          formula: "SHAKE256(message) → digest",
+        },
+        salt_generated: {
+          inputs: ["Digest", "Aléa", "seed_sk"],
+          operation: "SHAKE256",
+          outputs: ["Sel"],
+          formula: "SHAKE256(digest ∥ aléa ∥ seed_sk) → sel",
+          note: "La graine secrète est utilisée en mémoire, jamais exposée dans la visualisation.",
+        },
+        target_derived: {
+          inputs: ["Digest", "Sel"],
+          operation: "SHAKE256",
+          outputs: ["Cible t"],
+          formula: "SHAKE256(digest ∥ sel) → vecteur cible t",
+        },
+        emulsifier_loaded: {
+          inputs: ["Table E"],
+          operation: "Chargement",
+          outputs: ["Matrices E"],
+          formula: "table des coefficients Eᵢⱼ → combinaisons de blocs",
+        },
+        attempt_values_generated: {
+          inputs: ["Digest", "Sel", "seed_sk", "Compteur"],
+          operation: "SHAKE256",
+          outputs: ["Blocs vinegar v", "Vecteur r"],
+          formula: "SHAKE256(digest ∥ sel ∥ seed_sk ∥ ctr) → v, r",
+          note: "Nouvelle tentative si le système linéaire est incohérent.",
+        },
+        intermediate_matrices_built: {
+          inputs: ["L", "P1", "Blocs v"],
+          operation: "Produits matriciels",
+          outputs: ["Matrices M", "Vecteurs W"],
+          formula: "Mⱼ = Lⱼᵀ·v · W = P1·v",
+          note: "Les coefficients ne sont pas inclus dans la trace cryptographique.",
+        },
+        linear_system_built: {
+          inputs: ["Matrices E", "M", "W", "Cible t"],
+          operation: "Assemblage",
+          outputs: ["Matrice A", "Vecteur y"],
+          formula: "accumulation des blocs → système A·x = y sur GF(16)",
+          note: "Le système est calculé par le moteur; ses coefficients restent masqués.",
+        },
+        sample_solution: {
+          inputs: ["A", "y", "Vecteur r"],
+          operation: "Résolution",
+          outputs: ["Solution x"],
+          formula: "SampleSolution(A, y, r) → x ou système incohérent",
+        },
+        signature_encoded: {
+          inputs: ["Blocs vinegar v", "Solution x", "Matrice O", "Sel"],
+          operation: "Assemblage + encodage",
+          outputs: ["Signature"],
+          formula: "s = (v + O·x) ∥ x → encodage bitsliced ∥ sel",
+        },
+        signing_failed: {
+          inputs: ["256 tentatives"],
+          operation: "Limite atteinte",
+          outputs: ["Échec de signature"],
+          formula: "aucune tentative n'a produit de solution",
+        },
+        message_normalized: {
+          inputs: ["Message saisi"],
+          operation: "UTF-8",
+          outputs: ["Octets du message"],
+          formula: "texte → octets UTF-8",
+        },
+        public_key_parsed: {
+          inputs: ["Clé publique étendue"],
+          operation: "Décodage",
+          outputs: ["P1", "P2", "P3"],
+          formula: "clé publique → familles de matrices",
+          note: "Les dimensions sont réelles; les coefficients ne sont pas tracés.",
+        },
+        signature_length_checked: {
+          inputs: ["Signature"],
+          operation: "Contrôle de taille",
+          outputs: ["Format validé"],
+          formula: "taille reçue ↔ taille attendue",
+        },
+        signature_split: {
+          inputs: ["Signature encodée"],
+          operation: "Séparation",
+          outputs: ["Vecteur encodé", "Sel"],
+          formula: "signature → octets du vecteur ∥ sel",
+        },
+        signature_vector_decoded: {
+          inputs: ["Vecteur encodé"],
+          operation: "Décodage",
+          outputs: ["Vecteur s"],
+          formula: "bitsliced → éléments de GF(16)",
+        },
+        signature_blocks_partitioned: {
+          inputs: ["Vecteur s"],
+          operation: "Partitionnement",
+          outputs: ["Blocs vinegar", "Blocs oil"],
+          formula: "s → k blocs de n éléments (v puis oil)",
+        },
+        quadratic_form_evaluated: {
+          inputs: ["P1", "P2", "P3", "Blocs s", "Matrices E"],
+          operation: "Forme quadratique",
+          outputs: ["Résultat y"],
+          formula: "Σᵢⱼ Eᵢⱼ · Q(sᵢ, sⱼ) → y",
+          note: "Les coefficients publics ne sont pas exposés dans la trace; le calcul, lui, est réel.",
+        },
+        verification_compared: {
+          inputs: ["Résultat y", "Cible t"],
+          operation: "Comparaison",
+          outputs: ["Signature acceptée"],
+          formula: "y = t ?",
+        },
+        input_rejected: {
+          inputs: ["Entrée reçue"],
+          operation: "Validation",
+          outputs: ["Entrée rejetée"],
+          formula: "contrôle du format et des types",
+        },
+      };
+
+      function flowMeta(name, dimensions, data) {
+        const shape = dimensions[name];
+        if (shape?.length) return shape.join(" × ");
+        const byteKey = {
+          seed_sk: "seed_sk_bytes",
+          seed_pk: "seed_pk_bytes",
+          "Octets de O": "oil_bytes",
+          "Octets P3": "p3_bytes",
+          "Clé publique": "compact_public_key_bytes",
+          "Clé secrète": "compact_secret_key_bytes",
+          Digest: "digest_bytes",
+          Sel: "salt_bytes",
+          "Vecteur encodé": "encoded_vector_bytes",
+          Signature: "signature_bytes",
+          "Message UTF-8": "message_bytes",
+          "Octets du message": "message_bytes",
+          "Clé publique étendue": "expanded_public_key_bytes",
+          "Clé secrète étendue": "expanded_secret_key_bytes",
+        }[name];
+        return byteKey && data[byteKey] !== undefined
+          ? `${data[byteKey]} octets`
+          : "";
+      }
+
+      function flowNode(name, type, index, step, spec) {
+        const meta = flowMeta(name, step.dimensions, step.data);
+        const glyph = type === "process" ? "" : '<span class="flow-glyph" aria-hidden="true"></span>';
+        return `<div class="flow-node ${type}" style="--flow-delay:${index * 70}ms">${glyph}<span>${name}</span>${meta ? `<span class="flow-meta">${meta}</span>` : ""}</div>`;
+      }
+
+      function renderCalculationFlow(step) {
+        const spec = CALCULATIONS[step.name] || {
+          inputs: ["Données de l'étape"],
+          operation: "Calcul MAYO1",
+          outputs: [LABELS[step.name] || step.name],
+          formula: "Consulter la trace réelle et ses dimensions.",
+        };
+        const inputs = spec.inputs.map((name, i) =>
+          flowNode(name, "input", i, step, spec),
+        ).join("");
+        const outputs = spec.outputs.map((name, i) => {
+          const output = step.name === "sample_solution" && step.data.solution_found === false
+            ? "Pas de solution"
+            : step.name === "verification_compared" && step.data.valid === false
+              ? "Signature rejetée"
+              : name;
+          return flowNode(output, "output", i + spec.inputs.length, step, spec);
+        }).join("");
+        const speed = Number($("#speed").value) || 1;
+        const duration = reduce ? "0s" : `${Math.max(0.45, 1.8 / speed)}s`;
+        const title = `${spec.inputs.join(", ")} vers ${spec.outputs.join(", ")} par ${spec.operation}`;
+        const note = spec.note
+          ? `<p class="flow-note">${spec.note}</p>`
+          : "";
+        return `<div class="flow-heading"><span>Flux du calcul</span><span>Entrées → transformation → sortie</span></div>
+          <div class="calc-flow" role="img" aria-label="${title}" style="--flow-duration:${duration}">
+            <div class="flow-group"><span class="flow-group-label">Entrées</span>${inputs}</div>
+            <div class="flow-operator" aria-hidden="true"><span>›</span></div>
+            <div class="flow-group"><span class="flow-group-label">Opération</span>${flowNode(spec.operation, "process", 1, step, spec)}</div>
+            <div class="flow-operator" aria-hidden="true"><span>›</span></div>
+            <div class="flow-group"><span class="flow-group-label">Résultat</span>${outputs}</div>
+          </div>
+          <p class="flow-formula">${spec.formula}</p>${note}`;
+      }
 
       function showTab(kind) {
         S.tab = kind;
@@ -836,6 +1978,10 @@
           return;
         }
         const [label, kind] = STATUS[s.status] || [s.status, ""];
+        const total = S.trace[S.tab]?.steps.length || 0;
+        const attempt = s.attempt
+          ? `<span class="step-index">Tentative ${s.attempt}</span>`
+          : "";
         const rows = Object.entries(s.data)
           .map(
             ([k, v]) =>
@@ -844,16 +1990,21 @@
           .join("");
         const shapes = Object.entries(s.dimensions).filter(([, d]) => d.length);
         const dims = shapes
-          .map(([name, d]) => {
-            const [h, w] = d.length === 1 ? [1, d[0]] : d.slice(-2),
-              scale = 90 / Math.max(h, w);
-            return `<div class="dim"><i style="width:${Math.max(6, w * scale)}px;height:${Math.max(6, h * scale)}px"></i>${name} ${d.join(" × ")}</div>`;
+          .map(([name, d], i) => {
+            const vector = d.length === 1,
+              [h, w] = vector ? [1, d[0]] : d.slice(-2),
+              scale = 72 / Math.max(h, w),
+              width = vector ? 72 : Math.max(34, Math.min(72, w * scale)),
+              height = vector ? 12 : Math.max(30, Math.min(72, h * scale));
+            return `<div class="dim" style="--matrix-delay:${i * 65}ms"><i class="${vector ? "vector-preview" : ""}" aria-hidden="true" style="width:${width}px;height:${height}px"></i><span>${name}</span><span>${d.join(" × ")}</span></div>`;
           })
           .join("");
         $("#detail").innerHTML =
-          `<h3 style="margin:0 0 .4rem;font-size:1rem">${LABELS[s.name] || s.name}</h3>
+          `<span class="step-index">Étape ${String(s.number).padStart(2, "0")} / ${String(total).padStart(2, "0")}</span>${attempt}
+    <h3>${LABELS[s.name] || s.name}</h3>
     <span class="status ${kind}">${label}</span><p style="margin-top:.75rem">${s.description}</p>
-    ${dims ? `<div class="dims">${dims}</div>` : ""}${rows ? `<table>${rows}</table>` : ""}`;
+    ${renderCalculationFlow(s)}
+    ${dims ? `<div class="matrix-heading"><span>Matrices & vecteurs</span><span>Dimensions · aperçu non numérique</span></div><div class="dims">${dims}</div>` : ""}${rows ? `<h4 class="data-heading">Mesures de l'étape</h4><table>${rows}</table>` : ""}`;
         if (!reduce)
           document.querySelectorAll("td[data-n]").forEach((td) => {
             const n = Number(td.dataset.n);
